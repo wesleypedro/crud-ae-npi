@@ -1,0 +1,7 @@
+### Vuejs ###
+# Recommended template: Node.gitignore
+
+vuetify-2-project/src/node_modules/
+dist/
+npm-debug.log
+yarn-error.log
