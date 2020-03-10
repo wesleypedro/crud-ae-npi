@@ -14,9 +14,9 @@ public interface UsuarioService {
 
     List<Usuario> findAll();
 
-    void insert(String email, boolean habilitado, String nome, String password);
+    void insert(Usuario usuario);
 
     void delete(Integer id);
 
-    int update(String email, boolean habilitado, String nome, String password, Curso curso, Integer id);
+    Usuario update(String email, boolean habilitado, String nome, String password, Curso curso, Integer id);
 }

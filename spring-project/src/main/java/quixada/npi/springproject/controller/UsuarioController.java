@@ -43,9 +43,11 @@ public class UsuarioController {
     public ResponseEntity<List<Usuario>> create(@RequestBody Usuario usuario) {
         // Cadastrar usuário e retornar usuário cadastrado...
 
-        if(usuarioService.findByEmail(usuario.getEmail()) != null){
-            usuarioService.insert(usuario.getEmail(), usuario.isHabilitado(), usuario.getNome(),
-                    passwordEncoder.encode(usuario.getPassword()));
+
+        System.out.println(usuario.getEmail());
+        if(usuarioService.findByEmail(usuario.getEmail()) == null){
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            usuarioService.insert(usuario);
         }
 
         return ResponseEntity.ok(usuarioService.findAll());
@@ -62,17 +64,10 @@ public class UsuarioController {
 
     @PutMapping("{id}")
     public ResponseEntity<List<Usuario>> update(@RequestBody Usuario usuario) {
-
-        if(usuarioService.update(usuario.getEmail(), usuario.isHabilitado(), usuario.getNome(),
-                usuario.getPassword(), usuario.getCurso(), usuario.getId()) == 0){
-
-            cursoService.update(usuario.getCurso().getNome(), usuario.getCurso().getSigla(),
-                    usuario.getCurso().getTurno(), usuario.getCurso().getUsuarios(), usuario.getCurso().getId());
+        usuarioService.update(usuario.getEmail(), usuario.isHabilitado(), usuario.getNome(),
+                usuario.getPassword(), usuario.getCurso(), usuario.getId());
 
             return ResponseEntity.ok(usuarioService.findAll());
-        }
-
-        return ResponseEntity.ok(new ArrayList<>());
     }
 
 

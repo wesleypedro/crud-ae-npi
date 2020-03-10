@@ -45,6 +45,9 @@
                             <v-simple-checkbox v-model="editedItem.habilitado"></v-simple-checkbox>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
+                            <v-select :items="cursoNomes" v-model="editedItem.curso" label="Curso"></v-select>
+                          </v-col>
+                          <v-col cols="12" sm="6" md="4">
                             <v-text-field v-model="editedItem.password" label="Senha"></v-text-field>
                           </v-col>
                         </v-row>
@@ -81,6 +84,7 @@
 import VCardWidget from "@/components/VWidget";
 import { RepositoryFactory } from "@/repositories/RepositoryFactory";
 const usuarioRepo = RepositoryFactory.get("usuario");
+const cursoRepo = RepositoryFactory.get("curso");
 
 export default {
   name: "home",
@@ -103,15 +107,19 @@ export default {
       },
       { text: "Email", value: "email" },
       { text: "Ativo", value: "habilitado" },
+      { text: "Curso", value: "curso.nome" },
       { text: "Ação", value: "action" }
     ],
     usuarios: [],
+    cursos: [],
+    cursoNomes: [],
     editedIndex: -1,
     editedItem: {
       id: -1,
       nome: "",
       email: "",
       habilitado: false,
+      curso: {},
       password: ""
     }
   }),
@@ -121,7 +129,17 @@ export default {
       .getAll()
       .then(res => {
         this.usuarios = res.data;
-        console.log(this.usuarios[0].password);
+        console.log(this.usuarios[0])
+      })
+      .catch(console.error);
+    cursoRepo
+      .getAll()
+      .then(res => {
+        this.cursos = res.data;
+        console.log(this.cursos[0].usuarios)
+        this.cursos.forEach(curso => {
+          this.cursoNomes.push(curso.nome);
+        });
       })
       .catch(console.error);
   },
@@ -169,6 +187,8 @@ export default {
     },
 
     save() {
+      var cursoIndex = this.cursoNomes.indexOf(this.editedItem.curso);
+      this.editedItem.curso = this.cursos[cursoIndex];
       if (this.editedItem.id > -1) {
         usuarioRepo
           .updateUser(this.editedItem.id, this.editedItem)
@@ -179,7 +199,7 @@ export default {
           })
           .catch(console.error);
       } else {
-        if (this.$refs.form.validate()) {
+        //if (this.$refs.form.validate()) {
           usuarioRepo
             .createUser(this.editedItem)
             .then(res => {
@@ -189,7 +209,7 @@ export default {
             })
             .catch(console.error);
         }
-      }
+      //}
       this.close();
     }
   }

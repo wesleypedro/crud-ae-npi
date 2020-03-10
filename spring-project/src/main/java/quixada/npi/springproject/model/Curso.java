@@ -23,6 +23,9 @@ public class Curso {
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
     private List<Usuario> usuarios;
 
+    public Curso() {
+    }
+
     public Curso(Integer id, @NotEmpty String nome, String sigla, String turno) {
         this(id, nome, sigla, turno, null);
     }

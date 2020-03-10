@@ -45,10 +45,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     void delete(@Param("id") Integer id);
 
     // Update user
-    @Modifying
-    @Query("UPDATE Usuario SET email=:email, habilitado=:habilitado, nome=:nome, password=:password " +
-            "curso=:curso.getId WHERE id=:id")
-    @Transactional
-    int update(@Param("email") String email, @Param("habilitado") boolean habilitado, @Param("nome") String nome,
-               @Param("password") String password, @Param("curso") Curso curso, @Param("id") Integer id);
+//    @Modifying
+//    @Query("UPDATE Usuario SET email=:email, habilitado=:habilitado, nome=:nome, password=:password " +
+//            "curso=:curso.getId WHERE id=:id")
+//    @Transactional
+//    int update(@Param("email") String email, @Param("habilitado") boolean habilitado, @Param("nome") String nome,
+//               @Param("password") String password, @Param("curso") Curso curso, @Param("id") Integer id);
 }

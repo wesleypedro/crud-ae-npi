@@ -13,7 +13,7 @@ public interface CursoService {
 
     List<Curso> findAll();
 
-    int update(String nome, String sigla, String turno, List<Usuario> usuarios, Integer id);
+    Curso update(String nome, String sigla, String turno, List<Usuario> usuarios, Integer id);
 
     void delete(Integer id);
 

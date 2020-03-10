@@ -18,7 +18,7 @@
                   </template>
                   <v-card>
                     <v-card-title>
-                      <span class="headline">{{formTittle}}</span>
+                      <span class="headline">{{formTitle}}</span>
                     </v-card-title>
 
                     <v-card-text>
@@ -28,10 +28,10 @@
                             <v-text-field v-model="editedItem.nome" label="Nome"></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.email" label="Sigla"></v-text-field>
+                            <v-text-field v-model="editedItem.sigla" label="Sigla"></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
-                            <v-select :items="turnos" label="Turno"></v-select>
+                            <v-select :items="turnos" v-model="editedItem.turno" label="Turno"></v-select>
                           </v-col>
                         </v-row>
                       </v-container>
@@ -93,7 +93,8 @@ export default {
       id: -1,
       nome: "",
       sigla: "",
-      turno: ""
+      turno: "",
+      usuarios: []
     }
   }),
 
@@ -143,25 +144,26 @@ export default {
     },
 
     save() {
-        if(this.editedItem.id > -1){
+      if (this.editedItem.id > -1) {
         cursoRepo
-            .updateCurso(this.editedItem.id, this.editedItem)
-            .then(res => {
+          .updateCurso(this.editedItem.id, this.editedItem)
+          .then(res => {
             if (res.data !== []) {
-                this.cursos = res.data;
+              this.cursos = res.data;
             }
-            })
-            .catch(console.error);
-        }else{
-            cursoRepo
-            .createCurso(this.editedItem)
-            .then(res => {
+          })
+          .catch(console.error);
+      } else {
+            console.log(this.editedItem)
+        cursoRepo
+          .createCurso(this.editedItem)
+          .then(res => {
             if (res.data !== []) {
-                this.cursos = res.data;
+              this.cursos = res.data;
             }
-            })
-            .catch(console.error);
-        }
+          })
+          .catch(console.error);
+      }
       this.close();
     }
   }

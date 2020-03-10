@@ -32,8 +32,10 @@ public class CursoServiceImpl implements CursoService {
     }
 
     @Override
-    public int update(String nome, String sigla, String turno, List<Usuario> usuarios, Integer id) {
-         return cursoRepository.update(nome, sigla, turno, usuarios, id);
+    public Curso update(String nome, String sigla, String turno, List<Usuario> usuarios, Integer id) {
+        Curso curso = new Curso(id, nome, sigla, turno, usuarios);
+        return cursoRepository.save(curso);
+         //return cursoRepository.update(nome, sigla, turno, usuarios, id);
     }
 
     @Override
