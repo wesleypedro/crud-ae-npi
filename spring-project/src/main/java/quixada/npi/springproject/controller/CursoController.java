@@ -35,7 +35,8 @@ public class CursoController {
 
     @PutMapping("{id}")
     public ResponseEntity<List<Curso>> update(@RequestBody Curso curso){
-        if(cursoService.update(curso.getNome(), curso.getSigla(), curso.getTurno(), curso.getId()) == 0){
+        if(cursoService.update(curso.getNome(), curso.getSigla(), curso.getTurno(),
+                curso.getUsuarios(), curso.getId()) == 0){
             return ResponseEntity.ok(new ArrayList<>());
         }
         return  ResponseEntity.ok(cursoService.findAll());

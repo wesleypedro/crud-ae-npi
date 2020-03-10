@@ -3,6 +3,7 @@ package quixada.npi.springproject.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quixada.npi.springproject.model.Curso;
+import quixada.npi.springproject.model.Usuario;
 import quixada.npi.springproject.repository.CursoRepository;
 import quixada.npi.springproject.service.CursoService;
 
@@ -31,8 +32,8 @@ public class CursoServiceImpl implements CursoService {
     }
 
     @Override
-    public int update(String nome, String sigla, String turno, Integer id) {
-         return cursoRepository.update(nome, sigla, turno, id);
+    public int update(String nome, String sigla, String turno, List<Usuario> usuarios, Integer id) {
+         return cursoRepository.update(nome, sigla, turno, usuarios, id);
     }
 
     @Override

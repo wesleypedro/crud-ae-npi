@@ -1,6 +1,7 @@
 package quixada.npi.springproject.service;
 
 
+import quixada.npi.springproject.model.Curso;
 import quixada.npi.springproject.model.Usuario;
 
 import java.util.List;
@@ -17,5 +18,5 @@ public interface UsuarioService {
 
     void delete(Integer id);
 
-    int update(String email, boolean habilitado, String nome, String password, Integer id);
+    int update(String email, boolean habilitado, String nome, String password, Curso curso, Integer id);
 }

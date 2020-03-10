@@ -7,6 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import quixada.npi.springproject.model.Usuario;
+import quixada.npi.springproject.service.CursoService;
 import quixada.npi.springproject.service.UsuarioService;
 
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private CursoService cursoService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -60,11 +64,15 @@ public class UsuarioController {
     public ResponseEntity<List<Usuario>> update(@RequestBody Usuario usuario) {
 
         if(usuarioService.update(usuario.getEmail(), usuario.isHabilitado(), usuario.getNome(),
-                usuario.getPassword(), usuario.getId()) == 0){
-            return ResponseEntity.ok(new ArrayList<>());
+                usuario.getPassword(), usuario.getCurso(), usuario.getId()) == 0){
+
+            cursoService.update(usuario.getCurso().getNome(), usuario.getCurso().getSigla(),
+                    usuario.getCurso().getTurno(), usuario.getCurso().getUsuarios(), usuario.getCurso().getId());
+
+            return ResponseEntity.ok(usuarioService.findAll());
         }
 
-        return ResponseEntity.ok(usuarioService.findAll());
+        return ResponseEntity.ok(new ArrayList<>());
     }
 
 

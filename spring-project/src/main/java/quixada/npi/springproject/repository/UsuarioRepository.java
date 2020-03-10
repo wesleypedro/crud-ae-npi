@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import quixada.npi.springproject.model.Curso;
 import quixada.npi.springproject.model.Usuario;
 
 import java.util.List;
@@ -46,8 +47,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     // Update user
     @Modifying
     @Query("UPDATE Usuario SET email=:email, habilitado=:habilitado, nome=:nome, password=:password " +
-            "WHERE id=:id")
+            "curso=:curso.getId WHERE id=:id")
     @Transactional
-    int update(@Param("email") String email, @Param("habilitado") boolean habilitado,
-                   @Param("nome") String nome, @Param("password") String password, @Param("id") Integer id);
+    int update(@Param("email") String email, @Param("habilitado") boolean habilitado, @Param("nome") String nome,
+               @Param("password") String password, @Param("curso") Curso curso, @Param("id") Integer id);
 }

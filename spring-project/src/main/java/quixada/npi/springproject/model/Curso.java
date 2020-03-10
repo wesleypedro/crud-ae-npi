@@ -1,10 +1,9 @@
 package quixada.npi.springproject.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Curso {
@@ -21,11 +20,19 @@ public class Curso {
 
     private String turno;
 
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
+    private List<Usuario> usuarios;
+
     public Curso(Integer id, @NotEmpty String nome, String sigla, String turno) {
+        this(id, nome, sigla, turno, null);
+    }
+
+    public Curso(Integer id, @NotEmpty String nome, String sigla, String turno, List<Usuario> usuarios) {
         this.id = id;
         this.nome = nome;
         this.sigla = sigla;
         this.turno = turno;
+        this.usuarios = usuarios;
     }
 
 
@@ -59,5 +66,17 @@ public class Curso {
 
     public void setTurno(String turno) {
         this.turno = turno;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public void addUsuario(Usuario usuario){
+        usuarios.add(usuario);
     }
 }

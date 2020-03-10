@@ -33,10 +33,10 @@ public interface CursoRepository extends JpaRepository<Curso, Integer> {
 
     // Update course
     @Modifying
-    @Query("UPDATE Curso SET nome=:nome, sigla=:sigla, turno=:turno WHERE id=:id")
+    @Query("UPDATE Curso SET nome=:nome, sigla=:sigla, turno=:turno, usuarios=:usuarios WHERE id=:id")
     @Transactional
-    int update(@Param("nome") String nome, @Param("sigla") String sigla,
-                   @Param("turno") String turno, @Param("id") Integer id);
+    int update(@Param("nome") String nome, @Param("sigla") String sigla, @Param("turno") String turno,
+               @Param("usuarios") List<Usuario> usuarios, @Param("id") Integer id);
 
     // Delete course
     @Modifying
