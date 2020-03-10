@@ -34,6 +34,9 @@ public class Usuario implements UserDetails {
 
 	private boolean habilitado;
 
+	@ManyToOne
+	private Curso curso;
+
 	public Usuario() {}
 
 	public Usuario (Integer id, String nome, String email) {
@@ -42,19 +45,17 @@ public class Usuario implements UserDetails {
 		this.email = email;
 	}
 
-	public Usuario (Integer id, String nome, boolean habilitado, String email) {
-		this.id = id;
-		this.nome = nome;
-		this.habilitado = habilitado;
-		this.email = email;
+	public Usuario (Integer id, String nome, boolean habilitado, String email, String password) {
+		this(id, nome, habilitado, email, password, null);
 	}
 
-	public Usuario (Integer id, String nome, boolean habilitado, String email, String password) {
+	public Usuario (Integer id, String nome, boolean habilitado, String email, String password, Curso curso) {
 		this.id = id;
 		this.nome = nome;
 		this.habilitado = habilitado;
 		this.email = email;
 		this.password = password;
+		this.curso = curso;
 	}
 
 	public Integer getId() {
@@ -99,7 +100,15 @@ public class Usuario implements UserDetails {
 		return Collections.emptyList();
 		//return this.papeis;
 	}
-	
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+
 	@Override
 //	@JsonIgnore
 	public String getPassword() {

@@ -1,6 +1,7 @@
 package quixada.npi.springproject.service;
 
 import quixada.npi.springproject.model.Curso;
+import quixada.npi.springproject.model.Usuario;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface CursoService {
 
     List<Curso> findAll();
 
-    int update(String nome, String sigla, String turno, Integer id);
+    int update(String nome, String sigla, String turno, List<Usuario> usuarios, Integer id);
 
     void delete(Integer id);
 

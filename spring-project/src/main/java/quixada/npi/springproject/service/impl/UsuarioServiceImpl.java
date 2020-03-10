@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import quixada.npi.springproject.model.Curso;
 import quixada.npi.springproject.model.Usuario;
 import quixada.npi.springproject.repository.UsuarioRepository;
 import quixada.npi.springproject.service.UsuarioService;
@@ -40,7 +41,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.delete(id);
     }
 
-    public int update(String email, boolean habilitado, String nome, String password, Integer id){
-        return usuarioRepository.update(email, habilitado, nome, password, id);
+    public int update(String email, boolean habilitado, String nome, String password, Curso curso, Integer id){
+        return usuarioRepository.update(email, habilitado, nome, password, curso, id);
     }
 }
