@@ -44,6 +44,13 @@ const actions = {
         commit('CLEAR_AUTH_DATA')
     },
 
+    logout({commit}) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('token_update_date');
+        window.location.href = '/login'
+        commit('CLEAR_AUTH_DATA')
+    },
+
     getUnidadeLotacao({commit}) {
         // Busca o unidade de lotação do usuário
         axios.get('/auth/unidade').then(res => {

@@ -63,9 +63,14 @@ public class UsuarioController {
 
     @PutMapping("{id}")
     public ResponseEntity<List<Usuario>> update(@RequestBody Usuario usuario) {
+
+        if(usuario.getPassword().trim().isEmpty()){
+            usuario.setPassword(usuarioService.find(usuario.getId()).getPassword());
+        }else {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        }
         usuarioService.update(usuario.getEmail(), usuario.isHabilitado(), usuario.getNome(),
                 usuario.getPassword(), usuario.getCurso(), usuario.getId());
-
             return ResponseEntity.ok(usuarioService.findAll());
     }
 

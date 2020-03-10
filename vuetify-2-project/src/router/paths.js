@@ -1,7 +1,6 @@
 import store from '../store'
 import LoginPage from '../views/Login'
 import Home from '../views/Home'
-import Register from '../views/Register'
 import Cursos from '../views/Cursos'
 
 export default [
@@ -26,16 +25,6 @@ export default [
         props: true,
         name: 'Login',
         component: LoginPage
-    },
-
-    {
-        path: '/register',
-        meta: {
-            public: true,
-        },
-        props: true,
-        name: 'Register',
-        component: Register
     },
 
     {

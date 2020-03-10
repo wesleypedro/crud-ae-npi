@@ -13,8 +13,7 @@
 
               <v-spacer></v-spacer>
 
-                <!--<span>Olá, {{nome}}</span>-->
-                <span>Olá, Usuário</span>
+                <span>Olá, {{nome}}</span>
                 <v-btn @click="logout" text>
                   <v-icon>power_settings_new</v-icon>
               </v-btn>
@@ -50,7 +49,7 @@ export default {
   name: 'App',
 
   data: () => ({
-      nome: ''
+      nome: window.localStorage.getItem('nome')
   }),
 
     created() {

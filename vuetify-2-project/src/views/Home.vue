@@ -45,7 +45,7 @@
                             <v-simple-checkbox v-model="editedItem.habilitado"></v-simple-checkbox>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
-                            <v-select :items="cursoNomes" v-model="editedItem.curso" label="Curso"></v-select>
+                            <v-select :items="cursoNomes" v-model="editedItem.curso.nome" label="Curso"></v-select>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field v-model="editedItem.password" label="Senha"></v-text-field>
