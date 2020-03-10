@@ -8,6 +8,7 @@
               </div>
                 <v-toolbar-items class="ml-3">
                     <v-btn to="/" text>Início</v-btn>
+                    <v-btn to="/cursos" text>Cursos</v-btn>
                 </v-toolbar-items>
 
               <v-spacer></v-spacer>

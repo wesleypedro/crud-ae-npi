@@ -1,7 +1,8 @@
 import UsuarioRepository from "./usuarioRepository";
 
 const repositories = {
-    usuario: UsuarioRepository
+    usuario: UsuarioRepository,
+    curso: cursoRepository
 };
 
 export const RepositoryFactory = {

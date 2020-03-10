@@ -1,51 +1,37 @@
 <template>
   <div>
-    <v-card-widget enableActions :title="'Página Inicial'">
+    <v-card-widget enableActions :title="'Cursos'">
       <div slot="widget-header-action"></div>
       <div slot="widget-content">
         <v-row>
           <v-col cols="12">
             <v-data-table
               :headers="headers"
-              :items="usuarios"
+              :items="cursos"
               :items-per-page="5"
               class="elevation-1"
             >
               <template v-slot:top>
                 <v-dialog v-model="dialog" max-width="500px">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark class="mb-2" v-on="on">Novo usuário</v-btn>
+                    <v-btn color="primary" dark class="mb-2" v-on="on">Novo curso</v-btn>
                   </template>
                   <v-card>
                     <v-card-title>
-                      <span class="headline">{{formTitle}}</span>
+                      <span class="headline">{{formTittle}}</span>
                     </v-card-title>
 
                     <v-card-text>
                       <v-container>
                         <v-row>
                           <v-col cols="12" sm="6" md="4">
-                            <v-text-field
-                              v-model="editedItem.nome"
-                              label="Nome"
-                              required
-                              :rules="requiredRule"
-                            ></v-text-field>
+                            <v-text-field v-model="editedItem.nome" label="Nome"></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
-                            <v-text-field
-                              v-model="editedItem.email"
-                              label="Email"
-                              required
-                              :rules="emailRules"
-                            ></v-text-field>
+                            <v-text-field v-model="editedItem.email" label="Sigla"></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
-                            <label>Ativo</label>
-                            <v-simple-checkbox v-model="editedItem.habilitado"></v-simple-checkbox>
-                          </v-col>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.password" label="Senha"></v-text-field>
+                            <v-select :items="turnos" label="Turno"></v-select>
                           </v-col>
                         </v-row>
                       </v-container>
@@ -80,7 +66,7 @@
 // @ is an alias to /src
 import VCardWidget from "@/components/VWidget";
 import { RepositoryFactory } from "@/repositories/RepositoryFactory";
-const usuarioRepo = RepositoryFactory.get("usuario");
+const cursoRepo = RepositoryFactory.get("curso");
 
 export default {
   name: "home",
@@ -89,11 +75,7 @@ export default {
   },
 
   data: () => ({
-    requiredRule: [v => !!v || "Campo obrigatório"],
-    emailRules: [
-      v => !!v || "Campo obrigatório",
-      v => /.+@.+\..+/.test(v) || "E-mail deve ser válido"
-    ],
+    turnos: ["manhã", "tarde", "noite"],
     dialog: false,
     headers: [
       {
@@ -101,95 +83,85 @@ export default {
         align: "left",
         value: "nome"
       },
-      { text: "Email", value: "email" },
-      { text: "Ativo", value: "habilitado" },
-      { text: "Ação", value: "action" }
+      { text: "Sigla", value: "sigla" },
+      { text: "Turno", value: "turno" },
+      { text: "Opções", value: "action" }
     ],
-    usuarios: [],
+    cursos: [],
     editedIndex: -1,
     editedItem: {
       id: -1,
       nome: "",
-      email: "",
-      habilitado: false,
-      password: ""
+      sigla: "",
+      turno: ""
     }
   }),
 
   created() {
-    usuarioRepo
+    cursoRepo
       .getAll()
       .then(res => {
-        this.usuarios = res.data;
-        console.log(this.usuarios[0].password);
+        this.cursos = res.data;
       })
       .catch(console.error);
   },
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "Novo usuário" : "Editar usuário";
+      return this.editedIndex === -1 ? "Novo curso" : "Editar curso";
     }
   },
 
   methods: {
     editItem(item) {
-      this.editedIndex = this.usuarios.indexOf(item);
+      this.editedIndex = this.cursos.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      this.editedItem.password = "";
       this.dialog = true;
     },
 
     deleteItem(item) {
-      if (!item.habilitado) {
-        const index = this.usuarios.indexOf(item);
-        if (confirm("Você tem certeza que deseja deletar esse item?")) {
-          usuarioRepo
-            .deleteUser(this.usuarios[index].id)
-            .then(res => {
-              this.usuarios = res.data;
-            })
-            .catch(console.error);
-        }
-      } else {
-        alert("Apenas usuarios inativos podem ser deletados");
+      const index = this.cursos.indexOf(item);
+      if (confirm("Você tem certeza que deseja deletar esse curso?")) {
+        cursoRepo
+          .deleteCurso(this.cursos[index].id)
+          .then(res => {
+            this.cursos = res.data;
+          })
+          .catch(console.error);
       }
     },
     close() {
       this.dialog = false;
       setTimeout(() => {
         this.editedItem = {
-          name: "",
-          email: "",
-          habilitado: false,
-          password: ""
+          nome: "",
+          sigla: "",
+          turno: ""
         };
         this.editedIndex = -1;
       }, 300);
     },
 
     save() {
-      if (this.editedItem.id > -1) {
-        usuarioRepo
-          .updateUser(this.editedItem.id, this.editedItem)
-          .then(res => {
-            if (res.data !== []) {
-              this.usuarios = res.data;
-            }
-          })
-          .catch(console.error);
-      } else {
-        if (this.$refs.form.validate()) {
-          usuarioRepo
-            .createUser(this.editedItem)
+        if(this.editedItem.id > -1){
+        cursoRepo
+            .updateCurso(this.editedItem.id, this.editedItem)
             .then(res => {
-              if (res.data !== []) {
-                this.usuarios = res.data;
-              }
+            if (res.data !== []) {
+                this.cursos = res.data;
+            }
+            })
+            .catch(console.error);
+        }else{
+            cursoRepo
+            .createCurso(this.editedItem)
+            .then(res => {
+            if (res.data !== []) {
+                this.cursos = res.data;
+            }
             })
             .catch(console.error);
         }
-      }
       this.close();
     }
   }

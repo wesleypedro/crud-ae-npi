@@ -13,7 +13,6 @@
                             <v-text-field id="password" label="Password" name="password" prepend-icon="lock" type="password" v-model="password" required :rules="requiredRule"/>
                         </v-card-text>
                         <v-card-actions>
-                            <v-btn color="primary" href="/register" :loading="loading" large>Criar conta</v-btn>
                             <v-spacer />
                             <v-btn color="primary" type="submit" :loading="loading" large>Entrar</v-btn>
                         </v-card-actions>
