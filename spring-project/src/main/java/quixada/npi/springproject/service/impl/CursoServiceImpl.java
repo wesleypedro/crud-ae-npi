@@ -22,7 +22,6 @@ public class CursoServiceImpl implements CursoService {
 
     @Override
     public Curso find(Integer id) {
-//        return cursoRepository.find(id);
         return cursoRepository.getOne(id);
     }
 
@@ -35,7 +34,6 @@ public class CursoServiceImpl implements CursoService {
     public Curso update(String nome, String sigla, String turno, List<Usuario> usuarios, Integer id) {
         Curso curso = new Curso(id, nome, sigla, turno, usuarios);
         return cursoRepository.save(curso);
-         //return cursoRepository.update(nome, sigla, turno, usuarios, id);
     }
 
     @Override

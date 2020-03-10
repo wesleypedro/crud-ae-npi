@@ -41,6 +41,5 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario update(String email, boolean habilitado, String nome, String password, Curso curso, Integer id){
         Usuario usuario = new Usuario(id, nome, habilitado, email, password, curso);
         return usuarioRepository.save(usuario);
-        //return usuarioRepository.update(email, habilitado, nome, password, curso, id);
     }
 }

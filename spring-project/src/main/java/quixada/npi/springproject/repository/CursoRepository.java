@@ -22,8 +22,6 @@ public interface CursoRepository extends JpaRepository<Curso, Integer> {
     void insert(@Param("nome") String nome, @Param("sigla") String sigla, @Param("turno") String turno);
 
     // Find
-//    @Query("SELECT new Curso(c.id, c.nome, c.sigla, c.turno) FROM Curso c WHERE c.id=:id")
-//    List<Curso> find(@Param("id") Integer id);
     @Override
     Curso getOne(Integer id);
 

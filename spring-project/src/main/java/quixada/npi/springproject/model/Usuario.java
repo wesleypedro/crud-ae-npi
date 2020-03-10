@@ -98,7 +98,6 @@ public class Usuario implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Collections.emptyList();
-		//return this.papeis;
 	}
 
 	public Curso getCurso() {
@@ -110,7 +109,6 @@ public class Usuario implements UserDetails {
 	}
 
 	@Override
-//	@JsonIgnore
 	public String getPassword() {
 		return this.password;
 	}

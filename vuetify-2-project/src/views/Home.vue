@@ -129,14 +129,14 @@ export default {
       .getAll()
       .then(res => {
         this.usuarios = res.data;
-        console.log(this.usuarios[0])
+        console.log(this.usuarios[0]);
       })
       .catch(console.error);
     cursoRepo
       .getAll()
       .then(res => {
         this.cursos = res.data;
-        console.log(this.cursos[0].usuarios)
+        console.log(this.cursos[0].usuarios);
         this.cursos.forEach(curso => {
           this.cursoNomes.push(curso.nome);
         });
@@ -199,17 +199,15 @@ export default {
           })
           .catch(console.error);
       } else {
-        //if (this.$refs.form.validate()) {
-          usuarioRepo
-            .createUser(this.editedItem)
-            .then(res => {
-              if (res.data !== []) {
-                this.usuarios = res.data;
-              }
-            })
-            .catch(console.error);
-        }
-      //}
+        usuarioRepo
+          .createUser(this.editedItem)
+          .then(res => {
+            if (res.data !== []) {
+              this.usuarios = res.data;
+            }
+          })
+          .catch(console.error);
+      }
       this.close();
     }
   }

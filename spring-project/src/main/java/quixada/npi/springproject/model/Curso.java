@@ -1,5 +1,7 @@
 package quixada.npi.springproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class Curso {
 
     private String turno;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
     private List<Usuario> usuarios;
 

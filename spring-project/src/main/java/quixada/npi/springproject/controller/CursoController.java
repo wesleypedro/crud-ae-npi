@@ -37,10 +37,8 @@ public class CursoController {
     public ResponseEntity<List<Curso>> update(@RequestBody Curso curso){
         cursoService.update(curso.getNome(), curso.getSigla(), curso.getTurno(),
                 curso.getUsuarios(), curso.getId());
-            //return ResponseEntity.ok(new ArrayList<>());
 
         return  ResponseEntity.ok(cursoService.findAll());
-//        return ResponseEntity.ok(cursoService.update(curso.getNome(), curso.getSigla(), curso.getTurno(), curso.getId()));
     }
 
     @DeleteMapping("{id}")

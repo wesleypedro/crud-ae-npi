@@ -36,7 +36,6 @@ public class UsuarioController {
     public ResponseEntity<Usuario> find(@PathVariable Integer id) {
         // Busca usuário pelo id e retornar usuário...
         return ResponseEntity.ok(usuarioService.find(id));
-//        return ResponseEntity.ok().build();
     }
 
     @PostMapping("")
