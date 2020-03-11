@@ -14,6 +14,8 @@ public interface UsuarioService {
 
     List<Usuario> findAll();
 
+    List<Usuario> findUserByCourse(Integer curso_id);
+
     void insert(Usuario usuario);
 
     void delete(Integer id);
