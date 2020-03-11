@@ -22,8 +22,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 
     // Find by id
-    @Override
-    Usuario getOne(Integer id);
+    @Query("SELECT u FROM Usuario u WHERE u.id=:id")
+    Usuario find(@Param("id") Integer id);
 
     // Find all
     List<Usuario> findAll();
@@ -36,6 +36,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Transactional
     void insert(@Param("email") String email, @Param("habilitado") boolean habilitado,
                @Param("nome") String nome, @Param("password") String password);
+
+    // Find users with course
+    @Query("SELECT u FROM Usuario u WHERE u.curso.id=:curso_id")
+    List<Usuario> findUserByCourse(@Param("curso_id") Integer curso_id);
 
     // Delete user
     @Modifying
