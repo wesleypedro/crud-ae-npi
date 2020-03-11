@@ -45,7 +45,11 @@
                             <v-simple-checkbox v-model="editedItem.habilitado"></v-simple-checkbox>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
-                            <v-select :items="cursoNomes" v-model="editedItem.curso.nome" label="Curso"></v-select>
+                            <v-select
+                              :items="cursoNomes"
+                              v-model="editedItem.curso.nome"
+                              label="Curso"
+                            ></v-select>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field v-model="editedItem.password" label="Senha"></v-text-field>
@@ -154,7 +158,7 @@ export default {
     editItem(item) {
       this.editedIndex = this.usuarios.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      this.editedItem.password = "";
+      this.editedItem.password = ""
       this.dialog = true;
     },
 
@@ -177,9 +181,11 @@ export default {
       this.dialog = false;
       setTimeout(() => {
         this.editedItem = {
-          name: "",
+          id: -1,
+          nome: "",
           email: "",
           habilitado: false,
+          curso: {},
           password: ""
         };
         this.editedIndex = -1;
@@ -187,8 +193,14 @@ export default {
     },
 
     save() {
-      var cursoIndex = this.cursoNomes.indexOf(this.editedItem.curso);
-      this.editedItem.curso = this.cursos[cursoIndex];
+      var c = {}
+      console.log(this.editedItem.curso.nome);
+      this.cursos.forEach(curso => {
+        if(curso.nome === this.editedItem.curso.nome ){
+          c = curso;
+        }
+      });
+      this.editedItem.curso = c;
       if (this.editedItem.id > -1) {
         usuarioRepo
           .updateUser(this.editedItem.id, this.editedItem)

@@ -64,13 +64,20 @@ public class UsuarioController {
     @PutMapping("{id}")
     public ResponseEntity<List<Usuario>> update(@RequestBody Usuario usuario) {
 
-        if(usuario.getPassword().trim().isEmpty()){
-            usuario.setPassword(usuarioService.find(usuario.getId()).getPassword());
-        }else {
-            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        }
-        usuarioService.update(usuario.getEmail(), usuario.isHabilitado(), usuario.getNome(),
-                usuario.getPassword(), usuario.getCurso(), usuario.getId());
+        System.out.println(usuario.getPassword());
+       if(usuario.getPassword().trim().isEmpty()){
+           List<Usuario> usuarios = usuarioService.findAll();
+           for (Usuario user: usuarios
+                ) {
+               if(usuario.getId() == user.getId()){
+                   usuario.setPassword(user.getPassword());
+               }
+           }
+       }else {
+           usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+       }
+      usuarioService.update(usuario.getEmail(), usuario.isHabilitado(), usuario.getNome(),
+              usuario.getPassword(), usuario.getCurso(), usuario.getId());
             return ResponseEntity.ok(usuarioService.findAll());
     }
 
