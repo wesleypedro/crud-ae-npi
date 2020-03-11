@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import quixada.npi.springproject.model.Curso;
+import quixada.npi.springproject.model.Usuario;
 import quixada.npi.springproject.service.CursoService;
+import quixada.npi.springproject.service.UsuarioService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,9 @@ public class CursoController {
 
     @Autowired
     private CursoService cursoService;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @RequestMapping("{id}")
     public ResponseEntity<Curso> find(@PathVariable Integer id){
@@ -44,9 +49,15 @@ public class CursoController {
     @DeleteMapping("{id}")
     public ResponseEntity<List<Curso>> delete(@PathVariable Integer id){
         if(cursoService.find(id) != null) {
-            cursoService.delete(id);
+            List<Usuario> usuarios = usuarioService.findUserByCourse(id);
+
+            if(usuarios != null){
+                cursoService.delete(id);
+            }
+
+            return ResponseEntity.ok(cursoService.findAll());
         }
-        return ResponseEntity.ok(cursoService.findAll());
+        return ResponseEntity.ok(new ArrayList<>());
     }
 
 }

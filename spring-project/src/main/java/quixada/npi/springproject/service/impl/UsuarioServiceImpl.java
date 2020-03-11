@@ -21,8 +21,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public List<Usuario> findUserByCourse(Integer cursoId) {
+        return usuarioRepository.findUserByCourse(cursoId);
+    }
+
+    @Override
     public Usuario find(Integer id) {
-        return usuarioRepository.getOne(id);
+//        return usuarioRepository.getOne(id);
+        return usuarioRepository.find(id);
     }
 
     @Override
