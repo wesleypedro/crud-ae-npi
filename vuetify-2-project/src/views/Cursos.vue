@@ -126,7 +126,12 @@ export default {
         cursoRepo
           .deleteCurso(this.cursos[index].id)
           .then(res => {
-            this.cursos = res.data;
+            console.log(res.data)
+            if(res.data.length > 0){
+              this.cursos = res.data;
+            }else{
+              alert("Existem alguns usuários cadastrados nesse curso. Delete-os primeiro!")
+            }
           })
           .catch(console.error);
       }

@@ -50,12 +50,11 @@ public class CursoController {
     public ResponseEntity<List<Curso>> delete(@PathVariable Integer id){
         if(cursoService.find(id) != null) {
             List<Usuario> usuarios = usuarioService.findUserByCourse(id);
-
-            if(usuarios != null){
+            if(usuarios.isEmpty()){
                 cursoService.delete(id);
+                return ResponseEntity.ok(cursoService.findAll());
             }
 
-            return ResponseEntity.ok(cursoService.findAll());
         }
         return ResponseEntity.ok(new ArrayList<>());
     }
